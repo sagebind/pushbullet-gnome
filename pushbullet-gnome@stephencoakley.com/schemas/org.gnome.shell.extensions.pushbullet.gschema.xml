@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/org/gnome/shell/extensions/pushbullet/" id="org.gnome.shell.extensions.pushbullet">
+    <key name="api-key" type="s">
+        <default>""</default>
+        <summary>Pushbullet API key</summary>
+        <description>Your Pushbullet API key.</description>
+    </key>
+  </schema>
+</schemalist>
