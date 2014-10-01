@@ -12,6 +12,12 @@ const Settings = Pushbullet.imports.settings;
 
 let settings, notifications, apiClient, _timeoutId;
 
+/**
+ * Schedues a check for new notifications.
+ *
+ * @param Number timeout
+ * The number of milliseconds to from now to schedule the check at.
+ */
 function scheduleCheck(timeout) {
     if (_timeoutId != 0) {
         MainLoop.source_remove (_timeoutId);
@@ -29,11 +35,21 @@ function scheduleCheck(timeout) {
     });
 }
 
+/**
+ * Initializes the extension.
+ *
+ * @param Object metadata
+ * The metadata of the extension.
+ */
 function init(metadata) {
+    // thanks Philipp Hoffmann
     let theme = Gtk.IconTheme.get_default();
     theme.append_search_path(metadata.path + "/icons");
 }
 
+/**
+ * Enables the extension features.
+ */
 function enable() {
     settings = new Settings.Settings("org.gnome.shell.extensions.pushbullet");
     apiClient = new PushbulletApi.ApiClient();
@@ -47,6 +63,9 @@ function enable() {
     }
 }
 
+/**
+ * Disbales the extension features.
+ */
 function disable() {
     notifications.unregister();
 

@@ -8,6 +8,9 @@ const St = imports.gi.St;
 const Pushbullet = imports.misc.extensionUtils.getCurrentExtension();
 
 
+/**
+ * The notification source for Pushbullet notifications.
+ */
 const NotificationSource = new Lang.Class({
     Name: "NotificationSource",
     Extends: MessageTray.Source,
@@ -16,10 +19,16 @@ const NotificationSource = new Lang.Class({
         this.parent("Pushbullet", "pushbullet");
     },
 
+    /**
+     * Registers the source in the UI.
+     */
     register: function() {
         Main.messageTray.add(this);
     },
 
+    /**
+     * Unregisters the source in the UI.
+     */
     unregister: function() {
         Main.messageTray.remove(this);
     },
