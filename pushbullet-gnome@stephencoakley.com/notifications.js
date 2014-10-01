@@ -1,8 +1,11 @@
+const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const St = imports.gi.St;
+
+const Pushbullet = imports.misc.extensionUtils.getCurrentExtension();
 
 
 const NotificationSource = new Lang.Class({
@@ -72,5 +75,9 @@ const NotificationSource = new Lang.Class({
 
     openFile: function(file_url) {
         GLib.spawn_command_line_async("xdg-open \"" + file_url + "\"");
+    },
+
+    createNotificationIcon: function() {
+        return new St.Icon({ gicon: Gio.icon_new_for_string(Pushbullet.path + "/icons/pushbullet.png") });
     }
 });
