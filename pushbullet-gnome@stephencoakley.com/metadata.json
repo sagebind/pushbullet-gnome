@@ -3,5 +3,6 @@
     "uuid": "pushbullet-gnome@stephencoakley.com",
     "name": "Pushbullet",
     "description": "Sends and receives Pushbullet notifications",
-    "url": "https://github.com/coderstephen/pushbullet-gnome"
+    "url": "https://github.com/coderstephen/pushbullet-gnome",
+    "settings-schema": "org.gnome.shell.extensions.pushbullet"
 }

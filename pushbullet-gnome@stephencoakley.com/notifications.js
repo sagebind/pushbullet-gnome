@@ -75,9 +75,5 @@ const NotificationSource = new Lang.Class({
 
     openFile: function(file_url) {
         GLib.spawn_command_line_async("xdg-open \"" + file_url + "\"");
-    },
-
-    createNotificationIcon: function() {
-        return new St.Icon({ gicon: Gio.icon_new_for_string(Pushbullet.path + "/icons/pushbullet.png") });
     }
 });

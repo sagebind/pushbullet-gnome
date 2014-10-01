@@ -1,4 +1,5 @@
 const GLib = imports.gi.GLib;
+const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 const MainLoop = imports.mainloop;
@@ -28,7 +29,9 @@ function scheduleCheck(timeout) {
     });
 }
 
-function init() {
+function init(metadata) {
+    let theme = Gtk.IconTheme.get_default();
+    theme.append_search_path(metadata.path + "/icons");
 }
 
 function enable() {
