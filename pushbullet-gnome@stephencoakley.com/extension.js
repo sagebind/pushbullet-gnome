@@ -24,13 +24,23 @@ function scheduleCheck(timeout) {
     }
 
     _timeoutId = MainLoop.timeout_add(timeout, function() {
-        apiClient.getPushes(function(response) {
-            if (!response.error) {
-                for (var i = 0; i < 1; i++) {
-                    notifications.showPush(response.pushes[i]);
-                }
+        let lastChecked = settings.get_double("last-checked");
+
+        apiClient.getPushes(lastChecked, function(response) {
+            if (response.error) {
+                notifications.showNotePush({ title: "Error", body: response.error.message });
             }
-            scheduleCheck(60000);
+            else {
+                let i = 0, n = response.pushes.length - 1, m = settings.get_int("max-push-count");
+                while (i <= n && i < m) {
+                    notifications.showPush(response.pushes[n - i]);
+                    i++;
+                }
+
+                // update last checked timestamp
+                settings.set_double("last-checked", Math.ceil(response.pushes[n - i - 1].modified));
+            }
+            scheduleCheck(settings.get_int("check-frequency") * 1000);
         });
     });
 }
@@ -57,9 +67,14 @@ function enable() {
     notifications = new Notifications.NotificationSource();
     notifications.register();
 
+    // init last checked timestamp if this is our first time enabled
+    if (settings.get_double("last-checked") == 0) {
+        settings.set_double("last-checked", (GLib.get_real_time() / 1000000) - 86400);
+    }
+
     if (settings.get_string("api-key") != "") {
         apiClient.setApiKey(settings.get_string("api-key"));
-        scheduleCheck(1000);
+        scheduleCheck(1);
     }
 }
 
