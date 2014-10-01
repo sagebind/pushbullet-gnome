@@ -20,13 +20,15 @@ const ApiClient = new Lang.Class({
         this._apiKey = apiKey;
     },
 
-    getPushes: function(callback) {
-        this._sendRequest("https://api.pushbullet.com/v2/pushes", callback);
+    getPushes: function(modifiedAfter, callback) {
+        let message = new Soup.Message({
+            method: "GET",
+            uri: new Soup.URI("https://api.pushbullet.com/v2/pushes?modified_after=" + (modifiedAfter ? modifiedAfter : 0))
+        });
+        this._sendRequest(message, callback);
     },
 
-    _sendRequest: function(uri, callback) {
-        let message = new Soup.Message({ method: 'GET', uri: new Soup.URI(uri) });
-
+    _sendRequest: function(message, callback) {
         this._httpSession.queue_message(message, Lang.bind(this, function(session, message, callback) {
             let response = JSON.parse(message.response_body.data);
             return callback(response);
