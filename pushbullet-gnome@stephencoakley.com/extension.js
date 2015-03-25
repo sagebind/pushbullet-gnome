@@ -85,7 +85,7 @@ function disable() {
     notifications.unregister();
 
     if (_timeoutId != 0) {
-        Mainloop.source_remove(_timeoutId);
+        MainLoop.source_remove(_timeoutId);
         _timeoutId = 0;
     }
 }

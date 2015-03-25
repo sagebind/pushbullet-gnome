@@ -3,6 +3,7 @@ const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
+const NotificationDestroyedReason = MessageTray.NotificationDestroyedReason;
 const St = imports.gi.St;
 
 const Pushbullet = imports.misc.extensionUtils.getCurrentExtension();
@@ -30,7 +31,7 @@ const NotificationSource = new Lang.Class({
      * Unregisters the source in the UI.
      */
     unregister: function() {
-        Main.messageTray.remove(this);
+        this.destroy(NotificationDestroyedReason.SOURCE_CLOSED);
     },
 
     showPush: function(push) {
